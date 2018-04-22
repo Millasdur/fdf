@@ -1,0 +1,4 @@
+fdf
+**/*.o
+**/.*.swp
+libft/libft.a
