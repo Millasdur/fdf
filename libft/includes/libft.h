@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:49:34 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/19 14:13:43 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/23 14:15:05 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "ft_printf.h"
 
+# define BUFF_SIZE 2056
 # define BLACK "\033[22;31m"
 # define GREEN "\033[22;32m"
 # define BROWN "\033[22;33m"
@@ -136,5 +138,10 @@ void			ft_list_reverse(t_list **begin_list);
 void			ft_list_clear(t_list **begin_list);
 int				ft_list_size(t_list *begin_list);
 t_list			*ft_list_at(t_list *begin_list, unsigned int i);
+
+int				get_next_line(int fd, char **line);
+
+int				ft_tablen(char **tab);
+void			ft_tabdel(char ***tab);
 
 #endif

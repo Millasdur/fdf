@@ -6,7 +6,7 @@
 #    By: hlely <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/12 13:17:54 by hlely             #+#    #+#              #
-#    Updated: 2018/04/22 13:25:11 by hlely            ###   ########.fr        #
+#    Updated: 2018/04/23 14:15:19 by hlely            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,13 @@ LIB_NAME = ft_putchar.c\
 		   ft_list_at.c\
 		   ft_list_size.c\
 		   ft_nbdigit.c\
+		   get_next_line.c\
 		   ft_putnbrcolor.c\
 		   ft_putcolornl.c\
 		   ft_match.c\
 		   ft_putcolor.c\
+		   ft_tablen.c\
+		   ft_tabdel.c\
 		   ft_putcolornl.c\
 		   ft_list_reverse.c\
 		   ft_list_sort.c\
