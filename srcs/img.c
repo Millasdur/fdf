@@ -6,11 +6,16 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 14:23:20 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 18:15:47 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/23 18:33:23 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static unsigned int	*draw_seg(unsigned int *img, t_point **tab)
+{
+
+}
 
 static unsigned int	*put_point_into_img(unsigned int *img, t_point **tab)
 {
@@ -24,6 +29,7 @@ static unsigned int	*put_point_into_img(unsigned int *img, t_point **tab)
 		while (j < tab[i][j].x_max)
 		{
 			img[((int)tab[i][j].y * 1000) + (int)tab[i][j].x] = 0xFFFFFF;
+			img = draw_seg(img, tab);
 			j++;
 		}
 		i++;
