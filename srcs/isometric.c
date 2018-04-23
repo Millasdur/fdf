@@ -30,7 +30,7 @@ t_point		**shift_tab(t_point **tab)
 				(1000 - tab[i][j].x_max * modif) / 2 + modif * j;
 			tab[i][j].y = tab[i][j].y +
 				(1000 - tab[i][j].y_max * modif) / 2 + modif * (i + j);
-			tab[i][j].z = tab[i][j].z + modif;
+			tab[i][j].z = tab[i][j].z + modif * 5;
 			j++;
 		}
 		i++;
