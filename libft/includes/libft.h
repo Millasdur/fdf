@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:49:34 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 14:15:05 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/24 13:28:22 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include "ft_printf.h"
 
-# define BUFF_SIZE 2056
+# define BUFF_SIZE 1
 # define BLACK "\033[22;31m"
 # define GREEN "\033[22;32m"
 # define BROWN "\033[22;33m"

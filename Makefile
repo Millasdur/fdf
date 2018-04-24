@@ -6,7 +6,7 @@
 #    By: hlely <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/12 13:17:54 by hlely             #+#    #+#              #
-#    Updated: 2018/04/23 18:36:50 by hlely            ###   ########.fr        #
+#    Updated: 2018/04/24 12:51:31 by hlely            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,13 @@ CC = gcc
 FLAGS = -Wall -Wextra
 
 ### FDF ###
-PRINTF_NAME = main.c		\
-			  key_event.c	\
-			  parse_input.c	\
-			  fill_point.c	\
-			  isometric.c	\
-			  img.c
+PRINTF_NAME = main.c			\
+			  key_event.c		\
+			  parse_input.c		\
+			  fill_point.c		\
+			  isometric.c		\
+			  img.c				\
+			  ft_put_pixel.c	
 PRINTF_PATH = /
 SRC = $(addprefix $(PRINTF_PATH), $(PRINTF_NAME))
 

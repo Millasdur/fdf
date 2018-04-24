@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 12:55:24 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/24 11:20:18 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/24 17:08:42 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static t_point	calc_point(int i, int j, int x_max, char *tmp)
 	point.x_max = x_max;
 	point.y = i;
 	point.z = ft_atoi(tmp);
-	point.modif = 0.9;
 	point.native = (point.z == 0) ? 1 : 0;
 	return (point);
 }
@@ -57,7 +56,7 @@ static t_point	**fill_point2(int i, int y_max, char **tmp, t_point **tab)
 	return (tab);
 }
 
-t_point		**fill_point(t_point **tab, int fd, int y_max)
+t_point		**fill_point(t_point **tab, t_point **saved, int fd, int y_max)
 {
 	int		i;
 	char	*line;
