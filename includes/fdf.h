@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:28:38 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 16:15:08 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/24 11:42:25 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,26 @@ typedef struct	s_point
 	double	x;
 	double	y;
 	double	z;
+	double	modif;
 	int		x_max;
 	int		y_max;
 	int		native;
 }				t_point;
+
+typedef struct	s_draw
+{
+	int		i;
+	int		j;
+	int		xi;
+	int		yi;
+	int		xf;
+	int		yf;
+	int		dx;
+	int		dy;
+	int		x_inc;
+	int		y_inc;
+	int		sum;
+}				t_draw;
 
 int		key_event(int key, void *param);
 

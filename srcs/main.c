@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:31:51 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 18:13:50 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/24 10:32:51 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int		main(int ac, char **av)
 		return (1);
 	tab = parse_input(av[1]);
 	print_tab(tab);
-	ft_printf("----ISO-----\n");
 	tab = iso_pro(tab);
+	ft_printf("----ISO-----\n");
 	print_tab(tab);
-	ft_printf("----SHIFT-----\n");
 	tab = shift_tab(tab);
+	ft_printf("----SHIFT-----\n");
 	print_tab(tab);
 	launch_render(tab);
 	return (0);

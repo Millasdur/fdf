@@ -6,35 +6,31 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 14:23:20 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 18:33:23 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/24 12:39:54 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static unsigned int	*draw1(int i, int j, unsigned int *img, t_point **tab)
+static unsigned int	*draw1(t_draw draw, unsigned int *img, t_point **tab)
 {
 	int		k;
-	int		sum;
-	int		xf;
-	int		yf;
 	int		x;
 	int		y;
 
+	(void)tab;
 	k = 1;
-	x = tab[i][j].x;
-	y = tab[i][j].y;
-	xf = tab[i][j + 1].x;
-	yf = tab[i][j + 1].y;
-	sum = (xf - tab[i][j].x) / 2;
-	while (k <= xf - tab[i][j].x)
+	x = draw.xi;
+	y = draw.yi;
+	draw.sum = draw.dx / 2;
+	while (k <= draw.dx)
 	{
-		x = x + ((xf - tab[i][j].x > 0) ? 1 : -1);
-		sum += (yf - tab[i][j].y);
-		if (sum >= xf - tab[i][j].x)
+		x += draw.x_inc;
+		draw.sum += draw.dy;
+		if (draw.sum >= draw.dx)
 		{
-			sum -= (xf - tab[i][j].x);
-			y += (yf - tab[i][j].y > 0) ? 1 : -1;
+			draw.sum -= draw.dx;
+			y += draw.y_inc;
 		}
 		img[y * 1000 + x] = 0xFFFFFF;
 		k++;
@@ -42,29 +38,25 @@ static unsigned int	*draw1(int i, int j, unsigned int *img, t_point **tab)
 	return (img);
 }
 
-static unsigned int	*draw2(int i, int j, unsigned int *img, t_point **tab)
+static unsigned int	*draw2(t_draw draw, unsigned int *img, t_point **tab)
 {
 	int		k;
-	int		sum;
-	int		xf;
-	int		yf;
 	int		x;
 	int		y;
 
+	(void)tab;
 	k = 1;
-	x = tab[i][j].x;
-	y = tab[i][j].y;
-	xf = tab[i][j + 1].x;
-	yf = tab[i][j + 1].y;
-	sum = (yf - tab[i][j].y) / 2;
-	while (k <= yf - tab[i][j].y)
+	x = draw.xi;
+	y = draw.yi;
+	draw.sum = draw.dy / 2;
+	while (k <= draw.dy)
 	{
-		y += ((yf - tab[i][j].y > 0) ? 1 : -1);
-		sum += (xf - tab[i][j].x);
-		if (sum >= yf - tab[i][j].y)
+		y += draw.y_inc;
+		draw.sum += draw.dx;
+		if (draw.sum >= draw.dy)
 		{
-			sum -= (yf - tab[i][j].y);
-			x += (xf - tab[i][j].x > 0) ? 1 : -1;
+			draw.sum -= draw.dy;
+			x += draw.x_inc;;
 		}
 		img[y * 1000 + x] = 0xFFFFFF;
 		k++;
@@ -72,94 +64,41 @@ static unsigned int	*draw2(int i, int j, unsigned int *img, t_point **tab)
 	return (img);
 }
 
-static unsigned int	*draw1_down(int i, int j, unsigned int *img, t_point **tab)
+static unsigned int	*draw_seg_right(t_draw draw, unsigned int *img, t_point **tab)
 {
-	int		k;
-	int		sum;
-	int		xf;
-	int		yf;
-	int		x;
-	int		y;
-
-	k = 1;
-	x = tab[i][j].x;
-	y = tab[i][j].y;
-	xf = tab[i + 1][j].x;
-	yf = tab[i + 1][j].y;
-	sum = (xf - tab[i][j].x) / 2;
-	while (k <= xf - tab[i][j].x)
-	{
-		x = x + ((xf - tab[i][j].x > 0) ? 1 : -1);
-		sum += (yf - tab[i][j].y);
-		if (sum >= xf - tab[i][j].x)
-		{
-			sum -= (xf - tab[i][j].x);
-			y += (yf - tab[i][j].y > 0) ? 1 : -1;
-		}
-		img[y * 1000 + x] = 0xFFFFFF;
-		k++;
-	}
-	return (img);
-}
-
-static unsigned int	*draw2_down(int i, int j, unsigned int *img, t_point **tab)
-{
-	int		k;
-	int		sum;
-	int		xf;
-	int		yf;
-	int		x;
-	int		y;
-
-	k = 1;
-	x = tab[i][j].x;
-	y = tab[i][j].y;
-	xf = tab[i + 1][j].x;
-	yf = tab[i + 1][j].y;
-	sum = (yf - tab[i][j].y) / 2;
-	while (k <= yf - tab[i][j].y)
-	{
-		y += ((yf - tab[i][j].y > 0) ? 1 : -1);
-		sum += (xf - tab[i][j].x);
-		if (sum >= yf - tab[i][j].y)
-		{
-			sum -= (yf - tab[i][j].y);
-			x += (xf - tab[i][j].x > 0) ? 1 : -1;
-		}
-		img[y * 1000 + x] = 0xFFFFFF;
-		k++;
-	}
-	return (img);
-}
-static unsigned int	*draw_seg_right(int i, int j, unsigned int *img, t_point **tab)
-{
-	int		xf;
-	int		yf;
-
-	if (!tab[i] || j == tab[i][j].x_max)
+	if (!tab[draw.i] || draw.j == tab[draw.i][draw.j].x_max - 1)
 		return (img);
-	xf = tab[i][j + 1].x;
-	yf = tab[i][j + 1].y;
-	if (xf - tab[i][j].x > yf - tab[i][j].y)
-		img = draw1(i, j, img, tab);
+	draw.xf = tab[draw.i][draw.j + 1].x;
+	draw.yf = tab[draw.i][draw.j + 1].y;
+	draw.dx = draw.xf - draw.xi;
+	draw.dy = draw.yf - draw.yi;
+	draw.x_inc = (draw.dx > 0) ? 1 : -1;
+	draw.y_inc = (draw.dy > 0) ? 1 : -1;
+	draw.dx = ft_abs(draw.dx);
+	draw.dy = ft_abs(draw.dy);
+	if (draw.dx > draw.dy)
+		img = draw1(draw, img, tab);
 	else
-		img = draw2(i, j, img, tab);
+		img = draw2(draw, img, tab);
 	return (img);
 }
 
-static unsigned int	*draw_seg_down(int i, int j, unsigned int *img, t_point **tab)
+static unsigned int	*draw_seg_down(t_draw draw, unsigned int *img, t_point **tab)
 {
-	int		xf;
-	int		yf;
-
-	if (!tab[i + 1] || j == tab[i][j].x_max)
+	if (!tab[draw.i + 1] || draw.j == tab[draw.i][draw.j].x_max)
 		return (img);
-	xf = tab[i + 1][j].x;
-	yf = tab[i + 1][j].y;
-	if (xf - tab[i][j].x > yf - tab[i][j].y)
-		img = draw1_down(i, j, img, tab);
+	draw.xf = tab[draw.i + 1][draw.j].x;
+	draw.yf = tab[draw.i + 1][draw.j].y;
+	draw.dx = draw.xf - draw.xi;
+	draw.dy = draw.yf - draw.yi;
+	draw.x_inc = (draw.dx > 0) ? 1 : -1;
+	draw.y_inc = (draw.dy > 0) ? 1 : -1;
+	draw.dx = ft_abs(draw.dx);
+	draw.dy = ft_abs(draw.dy);
+	if (draw.dx > draw.dy)
+		img = draw1(draw, img, tab);
 	else
-		img = draw2_down(i, j, img, tab);
+		img = draw2(draw, img, tab);
 	return (img);
 }
 
@@ -167,6 +106,7 @@ static unsigned int	*put_point_into_img(unsigned int *img, t_point **tab)
 {
 	int		i;
 	int		j;
+	t_draw	draw;
 
 	i = 0;
 	while (tab && tab[i])
@@ -175,8 +115,12 @@ static unsigned int	*put_point_into_img(unsigned int *img, t_point **tab)
 		while (j < tab[i][j].x_max)
 		{
 			img[((int)tab[i][j].y * 1000) + (int)tab[i][j].x] = 0xFFFFFF;
-			img = draw_seg_right(i, j, img, tab);
-			img = draw_seg_down(i, j, img, tab);
+			draw.xi = tab[i][j].x;
+			draw.yi = tab[i][j].y;
+			draw.i = i;
+			draw.j = j;
+			img = draw_seg_right(draw, img, tab);
+			img = draw_seg_down(draw, img, tab);
 			j++;
 		}
 		i++;
