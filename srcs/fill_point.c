@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 12:55:24 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/24 17:08:42 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/25 09:45:30 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_point	**fill_point2(int i, int y_max, char **tmp, t_point **tab)
 	return (tab);
 }
 
-t_point		**fill_point(t_point **tab, t_point **saved, int fd, int y_max)
+t_point		**fill_point(t_point **tab, int fd, int y_max)
 {
 	int		i;
 	char	*line;

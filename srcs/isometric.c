@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 14:17:16 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/24 16:46:57 by hlely            ###   ########.fr       */
+/*   Updated: 2018/04/25 10:48:04 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,47 @@ void		setup_data(t_point **tab, t_data *data)
 	}
 }
 
+t_point		iso_point(t_point src, t_data *data)
+{
+	double	x;
+	double	y;
+	t_point		dest;
+
+	x = src.x;
+	y = src.y;
+	dest.z = src.z * data->modif;
+	dest.x = (src.x - src.y) * 2;
+	dest.y = (x + 1.5 * y) - dest.z;
+	data->xmin = (dest.x < data->xmin) ? dest.x : data->xmin;
+	data->ymin = (dest.y < data->ymin) ? dest.y : data->ymin;
+	data->xmax = (dest.x > data->xmax) ? dest.x : data->xmax;
+	data->ymax = (dest.y > data->ymax) ? dest.y : data->ymax;
+	data->zmin = (dest.z < data->zmin) ? dest.z : data->zmin;
+	data->zmax = (dest.z > data->zmax) ? dest.z : data->zmax;
+	return (dest);
+}
+
 t_point		**iso_pro(t_point **tab, t_data *data)
 {
 	int		i;
 	int		j;
-	double	x;
-	double	y;
+	t_point	**res;
 
 	i = 0;
 	setup_data(tab, data);
+	if (!(res = ft_memalloc(sizeof(t_point*) * (tab[0][0].y_max + 1))))
+		return (NULL);
 	while (tab[i])
 	{
+		if (!(res[i] = ft_memalloc(sizeof(t_point) * (tab[0][0].x_max + 1))))
+			return (NULL);
 		j = 0;
 		while (j < tab[i][j].x_max)
 		{
-			x = tab[i][j].x;
-			y = tab[i][j].y;
-			tab[i][j].z *= data->modif;
-			tab[i][j].x = (tab[i][j].x - tab[i][j].y) * 2;
-			tab[i][j].y = (x + 1.5 * y) - tab[i][j].z;
-			data->xmin = (tab[i][j].x < data->xmin) ? tab[i][j].x : data->xmin;
-			data->ymin = (tab[i][j].y < data->ymin) ? tab[i][j].y : data->ymin;
-			data->xmax = (tab[i][j].x > data->xmax) ? tab[i][j].x : data->xmax;
-			data->ymax = (tab[i][j].y > data->ymax) ? tab[i][j].y : data->ymax;
-			data->zmin = (tab[i][j].z < data->zmin) ? tab[i][j].z : data->zmin;
-			data->zmax = (tab[i][j].z > data->zmax) ? tab[i][j].z : data->zmax;
+			res[i][j] = iso_point(tab[i][j], data);
 			j++;
 		}
 		i++;
 	}
-	return (tab);
+	return (res);
 }
