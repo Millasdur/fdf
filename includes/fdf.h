@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:28:38 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/25 10:36:51 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 15:41:52 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,12 @@
 # include <fcntl.h>
 # include <math.h>
 
-typedef struct	s_point
+typedef struct		s_point
 {
-	double	x;
-	double	y;
-	double	z;
-	int		x_max;
-	int		y_max;
-	int		native;
-}				t_point;
-
-typedef struct	s_data
-{
-	t_point	**tab;
-	t_point	**saved;
-	void	*win_ptr;
-	void	*img_ptr;
-	void	*mlx_ptr;
-	double	xmin;
-	double	xmax;
-	double	dx;
-	double	ymin;
-	double	ymax;
-	double	dy;
-	double	zmin;
-	double	zmax;
-	double	modif;
-}				t_data;
+	double			x;
+	double			y;
+	double			z;
+}					t_point;
 
 typedef struct	s_draw
 {
@@ -63,16 +42,30 @@ typedef struct	s_draw
 	int		sum;
 }				t_draw;
 
-int		key_event(int key, t_data *param);
+typedef struct		s_data
+{
+	int				x;
+	int				y;
+	double			mod;
+	t_point			**map;
+	t_point			**iso;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+}					t_data;
 
-t_point	**parse_input(char *file);
-t_point	**fill_point(t_point **tab, int fd, int y_max);
+t_data				init_map(char *file, t_data data);
+t_data				get_nb_line(int fd, t_data data);
+t_data				fill_map(char *file, t_data data);
 
-t_point	**iso_pro(t_point **tab, t_data *data);
-t_point	**shift_tab(t_point **tab, t_data *data);
+t_point				**iso_pro(t_data data, t_point **point);
 
-void	launch_render(t_point **tab, t_data *data);
+unsigned int		*ft_put_pixel(int x, int y, unsigned int *img, t_data data);
+unsigned int		*draw_seg_right(t_draw draw, unsigned int *img,
+				t_point **map, t_data);
+unsigned int		*draw_seg_down(t_draw draw, unsigned int *img,
+				t_point **map, t_data);
 
-unsigned int	*ft_put_pixel(int x, int y, unsigned int *img, t_data data);
+void				launch_render(t_point **map, t_data *data);
 
 #endif

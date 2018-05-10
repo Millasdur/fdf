@@ -5,88 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/22 13:31:51 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/25 10:34:17 by hlely            ###   ########.fr       */
+/*   Created: 2018/05/09 09:39:49 by hlely             #+#    #+#             */
+/*   Updated: 2018/05/10 16:26:16 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	print_tab(t_point **tab)
+void		print_map(t_data data, t_point **map)
 {
-	int		i;
-	int		j;
+	int i;
+	int j;
 
 	i = 0;
-	while (tab && tab[i])
+	ft_printf("xmax : [%d]\nymax : [%d]\n", data.x, data.y);
+	while (i < data.y)
 	{
 		j = 0;
-		ft_printf("[");
-		while (j < tab[i][j].x_max)
+		while (j < data.x)
 		{
-			ft_printf("%4d,%4d,%4d|",
-					(int)tab[i][j].x, (int)tab[i][j].y, (int)tab[i][j].z);
+			ft_printf("[%2d|%2d|%2d]", (int)map[i][j].x, (int)map[i][j].y, (int)map[i][j].z);
 			j++;
 		}
-		ft_printf("]\n");
+		ft_printf("\n");
 		i++;
 	}
 }
 
-t_point	cpy_point(t_point point)
+t_data		init_data(char *file)
 {
-	t_point	cpy;
+	int			fd;
+	t_data		data;
 
-	cpy.x = point.x;
-	cpy.y = point.y;
-	cpy.z = point.z;
-	cpy.x_max = point.x_max;
-	cpy.y_max = point.y_max;
-	cpy.native = point.native;
-	return (cpy);
+	if ((fd = open(file, O_RDONLY)) == -1)
+		exit(EXIT_FAILURE);
+	data.x = 0;
+	data.y = 0;
+	data.mod = 0.1;
+	data.map = NULL;
+	data.iso = NULL;
+	data = get_nb_line(fd, data);
+	close(fd);
+	return (data);
 }
 
-t_point	**cpy_map(t_point **point)
+int			main(int ac, char **av)
 {
-	int		i;
-	int		j;
-	t_point	**cpy;
-
-	i = 0;
-	if (!(cpy = ft_memalloc(sizeof(t_point*) * (point[0][0].y_max + 1))))
-		return (NULL);
-	while (point && point[i])
-	{
-		if (!(cpy[i] = ft_memalloc(sizeof(t_point) * (point[0][0].x_max + 1))))
-			return (NULL);
-		j = 0;
-		while (j < point[i][j].x_max)
-		{
-			cpy[i][j] = cpy_point(point[i][j]);
-			j++;
-		}
-		i++;
-	}
-	return (cpy);
-}
-
-int		main(int ac, char **av)
-{
-	t_point			**tab;
-	t_data			data;
+	t_data	data;
 
 	if (ac != 2)
 		return (1);
-	data.modif = 0.1;
-	tab = parse_input(av[1]);
-	data.tab = tab;
-	data.saved = (const t_point**)cpy_map(tab);
-	printf("FIRST:%d\n", (int)data.saved[0][0].x);
-	tab = iso_pro(tab, &data);
-	data.dx = data.xmax - data.xmin;
-	data.dy = data.ymax - data.ymin;
-	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, 1000, 1000, "fdf");
-	launch_render(tab, &data);
+	data = init_data(av[1]);
+	data = init_map(av[1], data);
+	data.iso = iso_pro(data, data.map);
+	/* print_map(data, data.iso); */
+	launch_render(data.iso, &data);
 	return (0);
 }
