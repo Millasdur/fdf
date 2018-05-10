@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 15:29:50 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 16:18:53 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 19:40:28 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static unsigned int	*draw1(t_draw draw, unsigned int *img,
 			draw.sum -= draw.dx;
 			y += draw.y_inc;
 		}
-		img = ft_put_pixel(x, y, img, data);
+		img = ft_put_pixel(x, y, img, data, tab[draw.i][draw.j]);
 		k++;
 	}
 	return (img);
@@ -60,7 +60,8 @@ static unsigned int	*draw2(t_draw draw, unsigned int *img, t_point **tab,
 			draw.sum -= draw.dy;
 			x += draw.x_inc;;
 		}
-		img = ft_put_pixel(x, y, img, data);
+		img = ft_put_pixel(x, y, img, data, tab[draw.i][draw.j]);
+		/* img = ft_put_pixel(x, y, img, data); */
 		k++;
 	}
 	return (img);

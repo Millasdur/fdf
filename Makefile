@@ -6,7 +6,7 @@
 #    By: hlely <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/12 13:17:54 by hlely             #+#    #+#              #
-#    Updated: 2018/05/10 15:30:17 by hlely            ###   ########.fr        #
+#    Updated: 2018/05/10 20:40:29 by hlely            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,11 @@ FDF_NAME = main.c			\
 		   iso_pro.c		\
 		   ft_put_pixel.c	\
 		   render_img.c		\
-		   draw.c
+		   draw.c			\
+		   key_event.c		\
+		   clean_map.c		\
+		   move.c			\
+		   shift.c			
 FDF_PATH = /
 SRC = $(addprefix $(FDF_PATH), $(FDF_NAME))
 

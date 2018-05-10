@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 15:03:54 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 15:53:03 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 18:37:00 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static unsigned int	*put_point_into_img(unsigned int *img, t_point **map,
 	t_draw		draw;
 
 	i = 0;
-	while (i < data.y - 1)
+	while (i < data.y)
 	{
 		j = 0;
 		while (j < data.x)
@@ -47,8 +47,6 @@ static unsigned int	*calc_img(void *img_ptr, t_point **map, t_data data)
 	int				en;
 
 	img = (unsigned int*)mlx_get_data_addr(img_ptr, &bpp, &sl, &en);
-(void)data;
-(void)map;
 	img = put_point_into_img(img, map, data);
 	return (img);
 }
@@ -57,11 +55,9 @@ void	launch_render(t_point **map, t_data *data)
 {
 	unsigned int	*img;
 
-	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "fdf");
 	data->img_ptr = mlx_new_image(data->mlx_ptr, 1000, 1000);
 	img = calc_img(data->img_ptr, map, *data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
-	mlx_hook(data->win_ptr, 2, 3, 0, data);
+	mlx_hook(data->win_ptr, 2, 3, key_event, data);
 	mlx_loop(data->mlx_ptr);
 }

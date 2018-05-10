@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:28:38 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 15:41:52 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:12:18 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+
+# define EXIT 53
+# define INC 69
+# define DEC 78
+# define UP 126
+# define DOWN 125
+# define LEFT 123
+# define RIGHT 124
+# define M 46
+# define L 37
 
 typedef struct		s_point
 {
@@ -46,7 +56,15 @@ typedef struct		s_data
 {
 	int				x;
 	int				y;
+	double			xmin;
+	double			xmax;
+	double			ymin;
+	double			ymax;
+	double			zmax;
 	double			mod;
+	double			zoom;
+	double			xrot;
+	double			yrot;
 	t_point			**map;
 	t_point			**iso;
 	void			*mlx_ptr;
@@ -58,14 +76,24 @@ t_data				init_map(char *file, t_data data);
 t_data				get_nb_line(int fd, t_data data);
 t_data				fill_map(char *file, t_data data);
 
-t_point				**iso_pro(t_data data, t_point **point);
+t_point				**iso_pro(t_data *data, t_point **point);
+t_point				**shift_point(t_data data, t_point **map);
+t_point				**shift_iso(t_data data, t_point **map);
 
-unsigned int		*ft_put_pixel(int x, int y, unsigned int *img, t_data data);
+unsigned int		*ft_put_pixel(int x, int y, unsigned int *img, t_data data, t_point point);
 unsigned int		*draw_seg_right(t_draw draw, unsigned int *img,
 				t_point **map, t_data);
 unsigned int		*draw_seg_down(t_draw draw, unsigned int *img,
 				t_point **map, t_data);
 
 void				launch_render(t_point **map, t_data *data);
+void				move_x(t_data *data, int x);
+void				shift_x(t_data *data, int x);
+void				move_y(t_data *data, int x);
+void				shift_y(t_data *data, int x);
+void				zoom(t_data *data, int z);
+void				zoom_in_out(t_data *data, int z);
 
+int					key_event(int key, t_data *data);
+int					clean_map(t_data data, t_point ***point);
 #endif
