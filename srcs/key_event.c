@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 10:02:52 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:07:00 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:24:42 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ int		key_event(int key, t_data *data)
 		zoom_in_out(data, 1);
 	else if (key == L)
 		zoom_in_out(data, -1);
+	/* else if (key == M) */
+	/* 	rotxy(data, 0.3); */
+	/* else if (key == L) */
+	/* 	rotxy(data, -0.3); */
 	return (0);
 }

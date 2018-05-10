@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:36:41 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:11:55 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:14:38 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ t_point			iso_calc(t_point point, t_data *data)
 	x = point.x;
 	y = point.y;
 	new.z = point.z * data->mod;
-	new.x = (point.x - point.y) * data.xrot;
-	new.y = (x + data.yrot * y) - new.z;
+	new.x = (point.x - point.y) * data->xrot;
+	new.y = (x + data->yrot * y) - new.z;
 	data->xmin = (new.x < data->xmin) ? new.x : data->xmin;
 	data->xmax = (new.x > data->xmax) ? new.x : data->xmax;
 	data->ymin = (new.y < data->ymin) ? new.y : data->ymin;

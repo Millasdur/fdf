@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:28:38 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:12:18 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:20:48 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void				move_y(t_data *data, int x);
 void				shift_y(t_data *data, int x);
 void				zoom(t_data *data, int z);
 void				zoom_in_out(t_data *data, int z);
+void				rotxy(t_data *data, double z);
 
 int					key_event(int key, t_data *data);
 int					clean_map(t_data data, t_point ***point);

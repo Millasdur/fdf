@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 15:03:54 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 18:37:00 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:16:08 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static unsigned int	*put_point_into_img(unsigned int *img, t_point **map,
 		j = 0;
 		while (j < data.x)
 		{
-			img = ft_put_pixel(map[i][j].x, map[i][j].y, img, data);
+			img = ft_put_pixel(map[i][j].x, map[i][j].y, img, data, map[i][j]);
 			draw.xi = map[i][j].x;
 			draw.yi = map[i][j].y;
 			draw.i = i;
