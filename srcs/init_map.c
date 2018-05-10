@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 09:52:03 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 20:28:19 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/10 21:27:13 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_data			get_nb_line(int fd, t_data data)
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		ft_printf("Reading line %d", ymax);
 		xmax = get_xmax(line, xmax);
 		ft_strdel(&line);
 		ymax++;
