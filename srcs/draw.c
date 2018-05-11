@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 15:29:50 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 19:40:28 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/11 11:46:45 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static unsigned int	*draw1(t_draw draw, unsigned int *img,
 	int		x;
 	int		y;
 
-	(void)tab;
 	k = 1;
 	x = draw.xi;
 	y = draw.yi;
@@ -33,7 +32,9 @@ static unsigned int	*draw1(t_draw draw, unsigned int *img,
 			draw.sum -= draw.dx;
 			y += draw.y_inc;
 		}
-		img = ft_put_pixel(x, y, img, data, tab[draw.i][draw.j]);
+		draw.x = x;
+		draw.y = y;
+		img = ft_put_pixel(draw, img, data, tab[draw.i][draw.j]);
 		k++;
 	}
 	return (img);
@@ -46,7 +47,6 @@ static unsigned int	*draw2(t_draw draw, unsigned int *img, t_point **tab,
 	int		x;
 	int		y;
 
-	(void)tab;
 	k = 1;
 	x = draw.xi;
 	y = draw.yi;
@@ -58,10 +58,11 @@ static unsigned int	*draw2(t_draw draw, unsigned int *img, t_point **tab,
 		if (draw.sum >= draw.dy)
 		{
 			draw.sum -= draw.dy;
-			x += draw.x_inc;;
+			x += draw.x_inc;
 		}
-		img = ft_put_pixel(x, y, img, data, tab[draw.i][draw.j]);
-		/* img = ft_put_pixel(x, y, img, data); */
+		draw.x = x;
+		draw.y = y;
+		img = ft_put_pixel(draw, img, data, tab[draw.i][draw.j]);
 		k++;
 	}
 	return (img);

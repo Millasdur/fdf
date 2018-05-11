@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:36:41 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:14:38 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/11 11:44:06 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_point			**shift_point(t_data data, t_point **map)
 		j = 0;
 		while (j < data.x)
 		{
-			
 			map[i][j].x += 300 + ((double)j / data.x) * data.zoom;
 			map[i][j].y += 25 + ((double)i / data.y) * data.zoom;
 			j++;

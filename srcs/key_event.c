@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 10:02:52 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:24:42 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/11 11:33:23 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	inc_mod(t_data *data)
 {
-		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
-		data->mod += 0.1;
-		clean_map(*data, &data->iso);
-		data->iso = iso_pro(data, data->map);
-		launch_render(data->iso, data);
+	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
+	data->mod += 0.1;
+	clean_map(*data, &data->iso);
+	data->iso = iso_pro(data, data->map);
+	launch_render(data->iso, data);
 }
 
 void	dec_mod(t_data *data)
 {
-		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
-		data->mod -= 0.1;
-		clean_map(*data, &data->iso);
-		data->iso = iso_pro(data, data->map);
-		launch_render(data->iso, data);
+	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
+	data->mod -= 0.1;
+	clean_map(*data, &data->iso);
+	data->iso = iso_pro(data, data->map);
+	launch_render(data->iso, data);
 }
 
 int		key_event(int key, t_data *data)
@@ -50,9 +50,5 @@ int		key_event(int key, t_data *data)
 		zoom_in_out(data, 1);
 	else if (key == L)
 		zoom_in_out(data, -1);
-	/* else if (key == M) */
-	/* 	rotxy(data, 0.3); */
-	/* else if (key == L) */
-	/* 	rotxy(data, -0.3); */
 	return (0);
 }
