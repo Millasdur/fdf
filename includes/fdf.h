@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 13:28:38 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 21:20:48 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/11 11:45:32 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ typedef struct		s_point
 	double			z;
 }					t_point;
 
-typedef struct	s_draw
+typedef struct		s_draw
 {
 	int		i;
 	int		j;
+	int		x;
+	int		y;
 	int		xi;
 	int		yi;
 	int		xf;
@@ -50,7 +52,7 @@ typedef struct	s_draw
 	int		x_inc;
 	int		y_inc;
 	int		sum;
-}				t_draw;
+}					t_draw;
 
 typedef struct		s_data
 {
@@ -80,11 +82,12 @@ t_point				**iso_pro(t_data *data, t_point **point);
 t_point				**shift_point(t_data data, t_point **map);
 t_point				**shift_iso(t_data data, t_point **map);
 
-unsigned int		*ft_put_pixel(int x, int y, unsigned int *img, t_data data, t_point point);
+unsigned int		*ft_put_pixel(t_draw draw, unsigned int *img,
+						t_data data, t_point point);
 unsigned int		*draw_seg_right(t_draw draw, unsigned int *img,
-				t_point **map, t_data);
+						t_point **map, t_data data);
 unsigned int		*draw_seg_down(t_draw draw, unsigned int *img,
-				t_point **map, t_data);
+						t_point **map, t_data data);
 
 void				launch_render(t_point **map, t_data *data);
 void				move_x(t_data *data, int x);

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_event.c                                        :+:      :+:    :+:   */
+/*   ft_indexof.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/23 10:02:52 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/25 10:34:58 by hlely            ###   ########.fr       */
+/*   Created: 2018/05/11 14:45:39 by hlely             #+#    #+#             */
+/*   Updated: 2018/05/11 14:46:25 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "libft.h"
 
-int		key_event(int key, t_data *data)
+int			ft_indexof(char *str, char c)
 {
-	t_point	**tmp;
+	int		i;
 
-	if (key == 53)
-		exit(EXIT_SUCCESS);
-	if (key == 69) //+
+	i = 0;
+	while (str[i])
 	{
-		printf("THEN:%d\n", (int)data->saved[0][0].x);
-		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
-		data->modif += 0.1;
-		tmp = data->saved;
-		data->tab = iso_pro(tmp, data);
-		launch_render(data->tab, data);
+		if (str[i] == c)
+			return (i);
+		i++;
 	}
-	/* if (key == 78) //- */
-	return (0);
+	return (-1);
 }

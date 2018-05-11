@@ -5,100 +5,122 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 19:19:22 by hlely             #+#    #+#             */
-/*   Updated: 2018/04/23 11:53:36 by hlely            ###   ########.fr       */
+/*   Created: 2018/05/11 13:41:08 by hlely             #+#    #+#             */
+/*   Updated: 2018/05/11 19:11:28 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	clear_buf(int fd, char buf[BUFF_SIZE], int *i)
+static char		*getfd(int fd, t_list **list)
 {
-	int j;
+	t_list		*tmp;
+	t_list		*new;
+	t_gnl		gnl;
 
-	j = 0;
-	while (j < BUFF_SIZE)
+	tmp = *list;
+	while (tmp)
 	{
-		buf[j] = '\0';
-		j++;
+		if (((t_gnl*)(tmp->content))->fd == fd)
+			return (((t_gnl*)tmp->content)->buf);
+		tmp = tmp->next;
 	}
-	*i = 0;
-	return (read(fd, buf, BUFF_SIZE));
+	gnl.fd = fd;
+	ft_bzero(gnl.buf, BUFF_SIZE + 1);
+	new = ft_lstnew(&gnl, sizeof(gnl));
+	ft_lstadd(list, new);
+	return (((t_gnl*)new->content)->buf);
 }
 
-static char	*cpy_buf(char buf[BUFF_SIZE], char *str, int *i, int *ret)
+static int		fill_line(char *buf, char **line)
 {
-	char *tmp;
+	int		i;
+	char	tmp[BUFF_SIZE + 1];
 
-	while (buf[*i] && buf[*i] != '\n')
-	{
-		str = ft_strncat(str, buf + *i, 1);
-		(*i)++;
-	}
-	if (*i == BUFF_SIZE - 1)
-	{
-		*ret = 0;
-		*i = 0;
-	}
+	i = ft_indexof(buf, '\n');
+	if (i != -1)
+		*line = ft_strsub(buf, 0, i);
 	else
-		(*i)++;
-	tmp = ft_strdup(str);
-	ft_strdel(&str);
-	str = ft_strnew(ft_strlen(tmp) + 1);
-	str = ft_strcpy(str, tmp);
-	ft_strdel(&tmp);
-	return (str);
-}
-
-char		*resize(char *str, char buf[BUFF_SIZE], int i)
-{
-	char	*tmp;
-	int		len;
-
-	str = ft_strncat(str, buf + i, BUFF_SIZE - i);
-	len = ft_strlen(str);
-	tmp = ft_strdup(str);
-	ft_strdel(&str);
-	str = ft_strnew(len + BUFF_SIZE);
-	str = ft_strcpy(str, tmp);
-	ft_strdel(&tmp);
-	return (str);
-}
-
-int			check_first(char **line, int fd, int *ret, int *i)
-{
-	if (line == 0 || fd < 0 || BUFF_SIZE <= 0)
 	{
-		*i = 0;
-		*ret = 0;
+		*line = ft_strdup(buf);
+		ft_strclr(buf);
 		return (0);
 	}
+	ft_strclr(tmp);
+	ft_strcpy(tmp, buf + i + 1);
+	ft_strclr(buf);
+	ft_strcpy(buf, tmp);
 	return (1);
 }
 
-int			get_next_line(const int fd, char **line)
+static int		read_n_fill_line(int i, int ret, char *buf, char *tmp)
 {
-	static char	buf[BUFF_SIZE];
-	static int	ret = 0;
-	static int	i = 0;
-
-	if (!check_first(line, fd, &ret, &i))
-		return (-1);
-	*line = ft_strnew(BUFF_SIZE);
-	if (fd == 0 && !buf[i])
-		check_first(0, fd, &ret, &i);
-	ret = (!ret) ? clear_buf(fd, buf, &i) : ret;
-	if (ret < 0)
-		return (check_first(0, fd, &ret, &i) - 1);
-	while (ret == BUFF_SIZE && ft_strchr(buf + i, '\n') == NULL)
+	if (ret < BUFF_SIZE)
 	{
-		*line = resize(*line, buf, i);
-		ret = clear_buf(fd, buf, &i);
-		if (ret == 0)
+		if (i == ret)
+		{
+			ft_strclr(buf);
 			return (1);
+		}
+		tmp = ft_strdup(buf + i + 1);
+		ft_strclr(buf);
+		ft_strcpy(buf, tmp);
+		ft_strdel(&tmp);
+		return (1);
 	}
-	if (ret == 0 || (!buf[i]))
-		return ((check_first(0, fd, &ret, &i) == 1));
-	*line = cpy_buf(buf, *line, &i, &ret);
-	return (1);
+	if (ft_strchr(buf, '\n'))
+	{
+		tmp = ft_strdup(buf + i + 1);
+		ft_strclr(buf);
+		ft_strcpy(buf, tmp);
+		ft_strdel(&tmp);
+		return (1);
+	}
+	ft_strclr(buf);
+	return (0);
+}
+
+static int		read_n_fill(int fd, char *buf, char **line)
+{
+	int		i;
+	int		ret;
+	char	*tmp;
+
+	ret = read(fd, buf, BUFF_SIZE);
+	if (ret == -1)
+		return (-1);
+	if (ret == 0 && !*line)
+		return (2);
+	else if (ret == 0 && *line)
+		return (1);
+	i = ft_strchr(buf, '\n') ? ft_indexof(buf, '\n') : ret;
+	tmp = ft_strsub(buf, 0, i);
+	*line = ft_strjoinddel(*line, tmp);
+	return (read_n_fill_line(i, ret, buf, tmp));
+}
+
+int				get_next_line(int fd, char **line)
+{
+	int				ret;
+	char			*buf;
+	static t_list	*list = NULL;
+
+	if (fd < 0 || BUFF_SIZE <= 0 || !line)
+		return (-1);
+	buf = getfd(fd, &list);
+	*line = NULL;
+	if (ft_strchr(buf, '\n'))
+		return (fill_line(buf, line));
+	else if (*buf)
+		fill_line(buf, line);
+	while ((ret = read_n_fill(fd, buf, line)) == 0)
+	{
+	}
+	if (ret == 1)
+		return (1);
+	if (ret == 2)
+		return (0);
+	if (ret == -1)
+		return (-1);
+	return (0);
 }

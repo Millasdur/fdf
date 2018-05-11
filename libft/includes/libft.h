@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:49:34 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 16:27:44 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/11 18:40:52 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+typedef struct		s_gnl
+{
+	int			fd;
+	char		buf[BUFF_SIZE + 1];
+}					t_gnl;
+
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *str, size_t n);
 void			*ft_memcpy(void *str1, const void *str2, size_t n);
@@ -49,6 +55,7 @@ void			*ft_memmove(void *str1, const void *str2, size_t n);
 void			*ft_memchr(const void *str, int c, size_t n);
 int				ft_memcmp(const void *str1, const void *str2, size_t n);
 size_t			ft_strlen(const char *str);
+int				ft_indexof(char *str, char c);
 char			*ft_strdup(const char *s);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strncpy(char *dest, const char *src, size_t n);

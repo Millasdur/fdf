@@ -6,7 +6,7 @@
 #    By: hlely <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/12 13:17:54 by hlely             #+#    #+#              #
-#    Updated: 2018/04/23 18:36:36 by hlely            ###   ########.fr        #
+#    Updated: 2018/05/11 18:40:09 by hlely            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ LIB_NAME = ft_putchar.c\
 		   ft_putcolornl.c\
 		   ft_match.c\
 		   ft_putcolor.c\
+		   ft_indexof.c		\
 		   ft_tablen.c\
 		   ft_tabdel.c\
 		   ft_putcolornl.c\
