@@ -6,7 +6,7 @@
 /*   By: hlely <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 18:02:01 by hlely             #+#    #+#             */
-/*   Updated: 2018/05/10 18:04:41 by hlely            ###   ########.fr       */
+/*   Updated: 2018/05/12 10:08:33 by hlely            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		clean_map(t_data data, t_point ***point)
 		(*point)[i] = NULL;
 		i++;
 	}
-	free(*point);
+	if (point && *point)
+		free(*point);
 	*point = NULL;
 	return (1);
 }
